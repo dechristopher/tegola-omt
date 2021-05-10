@@ -6,7 +6,7 @@ the latest LTS Ubuntu Server distribution, [Tegola](https://tegola.io) as
 the tile server, [PostgreSQL](https://www.postgresql.org) as the database,
 and the use of the open source [OpenMapTiles](https://github.com/openmaptiles/openmaptiles)
 standard schema. We will be importing and updating our raw OSM data using
-the `imposm3` OSM to PostgreSQL import tool via the OpenMapTiles toolchain.
+the `imposm3` import tool, via the OpenMapTiles toolchain.
 
 ---
 
@@ -544,8 +544,9 @@ for the [Mapbox Style Specification](https://www.mapbox.com/mapbox-gl-js/style-s
 This repository contains an example `style.json` derived from the MapTiler Streets style.
 Font stacks and sprite sheets are included in the `carto` directory and must be hosted
 alongside the tiles on some webserver. Be sure to change the URL to the tiles, glyphs,
-and sprites in the `style.json` when deploying. There are a few issues with sprites for
-various icons, most notably highway icons. A PR investigating and fixing would be appreciated.
+and sprites in the `style.json` when deploying. Be mindful of CORS issues. There are a few
+known issues with sprites for various icons, most notably highway icons. A PR investigating
+and fixing would be appreciated.
 
 Alternatively, you can use one of many
 [open-source MVT styles](https://openmaptiles.org/styles/) compatible with the
