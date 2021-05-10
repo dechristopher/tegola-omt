@@ -1,0 +1,209 @@
+#[cache]
+# type = "s3"
+# max_zoom = 16 # zoom level to cache up to (0-X inclusive)
+# bucket = "your-tile-bucket"
+# region = "us-west-2"
+# aws_access_key_id = "accesskey"
+# aws_secret_access_key = "secretkey"
+
+# OSM (OpenMapTiles Compat)
+[[providers]]
+name = "osm"             # provider name referenced from map layers (required)
+type = "postgis"         # the type of data provider. currently only supports postgis (required)
+host = "hostname"        # postgis database host (required)
+port = 5432              # postgis database port (required)
+database = "osm"         # postgis database name (required)
+user = "osm"             # postgis database user (required)
+password = "supersecure" # postgis database password (required)
+srid = 3857              # The default srid for this provider. Defaults to WebMercator (3857) (optional)
+max_connections = 64     # The max connections to maintain in the connection pool. Default is 100. (optional)
+
+[[providers.layers]]
+name = "aerodrome_label"
+geometry_type = "point"
+geometry_fieldname = "geom"
+id_fieldname = "osm_id"
+sql = "SELECT ST_AsBinary(geometry) AS geom, osm_id, name, name_en, name_de, tags, class, iata, icao, ele, ele_ft FROM layer_aerodrome_label(!BBOX!, !ZOOM!)"
+
+[[providers.layers]]
+name = "aeroway"
+geometry_type = "polygon"
+geometry_fieldname = "geom"
+sql = "SELECT ST_AsBinary(geometry) AS geom, class, ref FROM layer_aeroway(!BBOX!, !ZOOM!)"
+
+[[providers.layers]]
+name = "boundary"
+geometry_type = "linestring"
+geometry_fieldname = "geom"
+sql = "SELECT ST_AsBinary(geometry) AS geom, admin_level, disputed, disputed_name, claimed_by, maritime FROM layer_boundary(!BBOX!, !ZOOM!)"
+
+[[providers.layers]]
+name = "building"
+geometry_type = "point"
+geometry_fieldname = "geom"
+id_fieldname = "osm_id"
+sql = "SELECT ST_AsBinary(geometry) AS geom, osm_id, render_height, render_min_height, colour, hide_3d FROM layer_building(!BBOX!, !ZOOM!)"
+
+[[providers.layers]]
+name = "housenumber"
+geometry_type = "point"
+geometry_fieldname = "geom"
+id_fieldname = "osm_id"
+sql = "SELECT ST_AsBinary(geometry) AS geom, osm_id, housenumber FROM layer_housenumber(!BBOX!, !ZOOM!)"
+
+[[providers.layers]]
+name = "landcover"
+geometry_type = "polygon"
+geometry_fieldname = "geom"
+sql = "SELECT ST_AsBinary(geometry) AS geom, class, subclass FROM layer_landcover(!BBOX!, !ZOOM!)"
+
+[[providers.layers]]
+name = "landuse"
+geometry_type = "polygon"
+geometry_fieldname = "geom"
+id_fieldname = "osm_id"
+sql = "SELECT ST_AsBinary(geometry) AS geom, osm_id, class FROM layer_landuse(!BBOX!, !ZOOM!)"
+
+[[providers.layers]]
+name = "mountain_peak"
+geometry_type = "point"
+geometry_fieldname = "geom"
+id_fieldname = "osm_id"
+sql = "SELECT ST_AsBinary(geometry) AS geom, osm_id, name, name_en, name_de, class, tags, ele, ele_ft, rank FROM layer_mountain_peak(!BBOX!, !ZOOM!, !PIXEL_WIDTH!)"
+
+[[providers.layers]]
+name = "park"
+geometry_type = "polygon"
+geometry_fieldname = "geom"
+id_fieldname = "osm_id"
+sql = "SELECT ST_AsBinary(geometry) AS geom, osm_id, class, name, name_en, name_de, tags, rank FROM layer_park(!BBOX!, !ZOOM!, !PIXEL_WIDTH!)"
+
+[[providers.layers]]
+name = "place"
+geometry_type = "point"
+geometry_fieldname = "geom"
+id_fieldname = "osm_id"
+sql = "SELECT ST_AsBinary(geometry) AS geom, osm_id, name, name_en, name_de, capital, class, iso_a2, rank FROM layer_place(!BBOX!, !ZOOM!, !PIXEL_WIDTH!)"
+
+[[providers.layers]]
+name = "poi"
+geometry_type = "point"
+geometry_fieldname = "geom"
+id_fieldname = "osm_id"
+sql = "SELECT ST_AsBinary(geometry) AS geom, osm_id, name, name_en, name_de, class, subclass, rank, agg_stop, level, layer, indoor FROM layer_poi(!BBOX!, !ZOOM!, !PIXEL_WIDTH!)"
+
+[[providers.layers]]
+name = "transportation"
+geometry_type = "linestring"
+geometry_fieldname = "geom"
+id_fieldname = "osm_id"
+sql = "SELECT ST_AsBinary(geometry) AS geom, osm_id, class, subclass, ramp, oneway, brunnel, service, layer, level, indoor, bicycle, foot, horse, mtb_scale, surface FROM layer_transportation(!BBOX!, !ZOOM!)"
+
+[[providers.layers]]
+name = "transportation_name"
+geometry_type = "linestring"
+geometry_fieldname = "geom"
+sql = "SELECT ST_AsBinary(geometry) AS geom, name, ref, ref_length, network, class, subclass, brunnel, layer, level, indoor FROM layer_transportation_name(!BBOX!, !ZOOM!)"
+
+[[providers.layers]]
+name = "water"
+geometry_type = "polygon"
+geometry_fieldname = "geom"
+sql = "SELECT ST_AsBinary(geometry) AS geom, class, brunnel, intermittent FROM layer_water(!BBOX!, !ZOOM!)"
+
+[[providers.layers]]
+name = "water_name"
+geometry_type = "point"
+geometry_fieldname = "geom"
+sql = "SELECT ST_AsBinary(geometry) AS geom, name, name_en, name_de, class, intermittent FROM layer_water_name(!BBOX!, !ZOOM!)"
+
+[[providers.layers]]
+name = "waterway"
+geometry_type = "linestring"
+geometry_fieldname = "geom"
+sql = "SELECT ST_AsBinary(geometry) AS geom, name, name_en, name_de, class, brunnel, intermittent FROM layer_waterway(!BBOX!, !ZOOM!)"
+
+[[maps]]
+name = "basemap"
+attribution = "© OpenMapTiles © OpenStreetMap Contributors"
+center = [-71.140027, 42.347621, 15.0]
+
+[[maps.layers]]
+provider_layer = "osm.aerodrome_label"
+min_zoom = 10
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.aeroway"
+min_zoom = 11
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.boundary"
+min_zoom = 0
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.building"
+min_zoom = 13
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.housenumber"
+min_zoom = 16
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.landcover"
+min_zoom = 0
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.landuse"
+min_zoom = 0
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.mountain_peak"
+min_zoom = 7
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.park"
+min_zoom = 0
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.place"
+min_zoom = 0
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.poi"
+min_zoom = 14
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.transportation"
+min_zoom = 0
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.transportation_name"
+min_zoom = 0
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.water"
+min_zoom = 0
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.water_name"
+min_zoom = 0
+max_zoom = 16
+
+[[maps.layers]]
+provider_layer = "osm.waterway"
+min_zoom = 0
+max_zoom = 16
