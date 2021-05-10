@@ -6,7 +6,8 @@ the latest LTS Ubuntu Server distribution, [Tegola](https://tegola.io) as
 the tile server, [PostgreSQL](https://www.postgresql.org) as the database,
 and the use of the open source [OpenMapTiles](https://github.com/openmaptiles/openmaptiles)
 standard schema. We will be importing and updating our raw OSM data using
-the `imposm3` import tool, via the OpenMapTiles toolchain.
+the `imposm3` import tool, via the
+[OpenMapTiles toolchain](https://github.com/openmaptiles/openmaptiles).
 
 ---
 
