@@ -488,7 +488,9 @@ make import-sql
 Cross your fingers. I've seen this script fail for so many reasons. If you followed
 this guide exactly, you should not have an error thrown at you. In case you do,
 however, you can comb through the generated sql files in `build/sql` in the repo to
-diagnose any possible issues.
+diagnose any possible issues. I've ocassionally had to manually run some of these
+when doing a full planet import while testing this guide. No conclusions have yet
+been made as to what the cause is.
 
 Re-running make `import-sql` is not harmful. Correct issues and re-run the script if
 you need to.
