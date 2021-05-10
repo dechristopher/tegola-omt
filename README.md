@@ -535,7 +535,8 @@ for the [Mapbox Style Specification](https://www.mapbox.com/mapbox-gl-js/style-s
 This repository contains an example `style.json` derived from the MapTiler Streets style.
 Font stacks and sprite sheets are included in the `carto` directory and must be hosted
 alongside the tiles on some webserver. Be sure to change the URL to the tiles, glyphs,
-and sprites in the `style.json` when deploying.
+and sprites in the `style.json` when deploying. There are a few issues with sprites for
+various icons, most notably highway icons. A PR investigating and fixing would be appreciated.
 
 Alternatively, you can use one of many
 [open-source MVT styles](https://openmaptiles.org/styles/) compatible with the
@@ -554,10 +555,10 @@ Here are links to a few:
 
 ## 8. Example
 
-A full-stack example exists in this repo within the `test` directory. You will need to edit the `style.json`
-within `test/public` to point to your tileserver properly after you've rolled it out. Additionally, the URLs
-to the sprites and glyphs will work out of the box in the example `style.json` since they're copied to the `public`
-directory.
+A full-stack example exists in this repo within the `test` directory. You will need to
+edit the `style.json` within `test/public` to point to your tileserver properly after you've
+rolled it out. Additionally, the URLs to the sprites and glyphs will work out of the box in
+the example `style.json` since they're copied to the `public` directory.
 
 
 ## 9. Conclusions
