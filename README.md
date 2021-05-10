@@ -29,6 +29,11 @@ Andrew DeChristopher <me@dchr.host>
 
 ## 1. Prerequisites
 
+**WARNING:** This guide is currently incompatible with hosted PostgreSQL services like
+AWS RDS/Aurora and others that do not natively support the `osml10n` extension out of
+the box. It will likely remain that way until these services support custom extension
+installation.
+
 ### _Important_:
 We will be operating out of the `/osm` directory. Create it and ensure proper
 permissions are set to your administrative user. Nothing during the import
@@ -38,7 +43,9 @@ as root** for the initial setup process since libraries and files will need to b
 copied around to various system directories.
 
 This guide assumes decent foundational knowledge of systems administration on
-Linux hosts, PostgreSQL, and Docker.
+Linux hosts, PostgreSQL, and Docker. It has been tested against vanilla PostgreSQL v13+
+installed on the latest long-term-support version of Ubuntu. Please ensure you have a
+working, modern PostgreSQL installation on the latest Ubuntu.
 
 ### Docker
 
@@ -143,7 +150,7 @@ sourced from data in different languages.
 
 The `osml10n` [project on Github](https://github.com/giggls/mapnik-german-l10n),
 currently the only working fork of the original project, is targeted to be built
-on Debian-derived linux distributions like Ubuntu. This guide assumes a vanilla
+on Debian-derived linux distributions like Ubuntu. Again, this guide assumes a vanilla
 PostgreSQL v13+ server installed on the latest long-term-support version of Ubuntu.
 
 The OSM Localization extension is very simple to build on a Debian/Ubuntu
