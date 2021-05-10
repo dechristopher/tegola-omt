@@ -1,4 +1,4 @@
-# Tegola OSM (OMT Compat) Vector Basemaps
+# Tegola OSM (OMT Compatible) Vector Basemaps
 
 This document outlines everything necessary to build, from scratch, an
 operational OpenStreetMap vector tile server. The stack consists of
