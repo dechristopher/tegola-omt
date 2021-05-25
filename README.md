@@ -446,7 +446,7 @@ If you're strapped for disk space, you can monitor the import and nuke the raw d
 as soon as the first stage is done. Stage two begins and writes the data from the
 on-disk cache directly to your database, so you can safely get rid of the raw data here.
 **Be mindful that you may need the raw data to retry from the beginning if something goes
-wrong with the import.** Stage two, in general, is where you'll want to state keeping an
+wrong with the import.** Stage two, in general, is where you'll want to start keeping an
 eye on disk usage.
 
 Stage three creates indexes and optimizes the tables before deploying them. Indexes can
