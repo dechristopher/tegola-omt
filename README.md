@@ -53,7 +53,7 @@ working, modern PostgreSQL installation on the latest Ubuntu.
 The OpenMapTiles toolchain, as mentioned, runs out of docker containers. Let's make
 sure we have it installed:
 ```bash
-sudo apt-get install docker.io
+sudo apt-get install docker.io docker-compose
 
 sudo usermod -aG docker <your username>
 
