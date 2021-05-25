@@ -379,6 +379,10 @@ into our database:
 make import-data
 ```
 
+**NOTE:** If you get an error saying the script `gave up waiting for Postgres` then you may have to
+specify a different IP than localhost in your `.env` and `.osmenv`. I believe this is due
+to an inconsistency with docker networking. I have yet to investigate it in depth.
+
 When this finishes, verify the tables are present in your db. We can now start the process
 that'll take 95% of the time we're going to spend rolling out our OSM basemaps: the import.
 
