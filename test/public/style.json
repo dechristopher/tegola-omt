@@ -7,6 +7,7 @@
       "tiles": [
         "http://tegola:8080/maps/basemap/{z}/{x}/{y}.pbf"
       ],
+      "attribution": "&copy; OpenStreetMap contributors",
       "minzoom": 0,
       "maxzoom": 16
     }
