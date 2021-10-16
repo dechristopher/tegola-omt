@@ -22,8 +22,8 @@ max_connections = 64     # The max connections to maintain in the connection poo
 name = "aerodrome_label"
 geometry_type = "point"
 geometry_fieldname = "geom"
-id_fieldname = "osm_id"
-sql = "SELECT ST_AsBinary(geometry) AS geom, osm_id, name, name_en, name_de, tags, class, iata, icao, ele, ele_ft FROM layer_aerodrome_label(!BBOX!, !ZOOM!)"
+id_fieldname = "id"
+sql = "SELECT ST_AsBinary(geometry) AS geom, id, name, name_en, name_de, tags, class, iata, icao, ele, ele_ft FROM layer_aerodrome_label(!BBOX!, !ZOOM!)"
 
 [[providers.layers]]
 name = "aeroway"
