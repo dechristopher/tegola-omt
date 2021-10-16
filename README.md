@@ -9,12 +9,11 @@ standard schema. We will be importing and updating our raw OSM data using
 the `imposm3` import tool, via the
 [OpenMapTiles toolchain](https://github.com/openmaptiles/openmaptiles).
 
----
-
-Maintained by:
 ```bash
-Andrew DeChristopher <me@dchr.host>
+Maintained by: Andrew DeChristopher <me@dchr.host>
 ```
+
+![Yosemite Village](preview.png)
 
 ## Outline
 1. [Prerequisites](#1-prerequisites)
@@ -512,20 +511,32 @@ you need to.
 
 ## 5. Tile Server Configuration
 
-As previously mentioned, this guide assumes the use of the Tegola tile server.
+As previously mentioned, this guide assumes the use of the Tegola tile server as it
+is fairly simple to set up while remaining powerful and fast.
 
 The assumption is made that you've followed the
 [Tegola docs](https://tegola.io/documentation/) to stand up a cluster of tile server
 instances on your own. Their docs are great and plenty of additional help is available
 on their [GitHub issues](https://github.com/go-spatial/tegola/issues).
 
-You are going to want some sort of caching enabled. S3 is fine, file caching is great
-if you've got a ton of fast SSD storage, and Redis is a decent option if you want to
-pay for it.
-
 You will find an example Tegola `config.toml` alongside this README with all available
 tile layers defined. [Reference the OpenMapTiles schema](https://openmaptiles.org/schema/)
 for fields to pull from the layer functions in the case that this guide becomes outdated.
+
+You are going to want some sort of caching enabled. Luckily Tegola includes a caching
+mechanism with multiple backing storage plugins. S3 is fine, file caching is great
+if you've got a ton of fast SSD storage, and Redis is a decent option if you want to
+manage the cluster.
+
+I recommend using [LOD](https://lod.tile.fund), an in-memory tile cache backed by Redis
+that sits in front of Tegola. With LOD you can disable Tegola's built in caching and
+leverage, in my opinion, a much faster cache that can be run at the edge rather than
+behind a proxy or firewall like Tegola does on its own. LOD gives you insight via stats
+and metrics and exposes powerful administrative functionality. It allows you to invalidate
+and prime portions of the cache for a given area or for the map as a whole. See a bad tile?
+One click later, it's removed from the cache and re-primed from Tegola.
+
+**Disclaimer**: I built LOD.
 
 
 ## 6. Updating Data
@@ -536,7 +547,7 @@ for fields to pull from the layer functions in the case that this guide becomes 
 ## 7. Integration
 
 The vector tile server stack you just created may now be used with any MVT-compatible
-mapping library such as [MapboxGL.js](https://www.mapbox.com/mapbox-gljs),
+mapping library such as [MapLibre](https://maplibre.org/) (my favorite), [MapboxGL.js](https://www.mapbox.com/mapbox-gljs),
 [Leaflet](https://leafletjs.com) using the
 [MapboxVectorTile plugin](https://github.com/SpatialServer/Leaflet.MapboxVectorTile),
 or [OpenLayers](https://openlayers.org) using the built-in
@@ -580,5 +591,3 @@ the example `style.json` since they're copied to the `public` directory.
 
 You've done it. Congratulations! Vector tile basemaps are the future. Hopefully, you'll
 think so as well after using them in production for a bit.
-
-![Yosemite Village](preview.png)
