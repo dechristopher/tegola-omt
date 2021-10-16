@@ -464,13 +464,6 @@ deployment.
 When the import completes (hopefully without error), you have a few more small steps to
 complete before we can use the data.
 
-First, create the borders tables with:
-```bash
-make import-borders
-```
-
-This may take a while.
-
 If an OSM feature has key:wikidata, OpenMapTiles checks
 the corresponding item in Wikidata and uses its labels for languages listed in the
 `openmaptiles.yaml` in the repo.
