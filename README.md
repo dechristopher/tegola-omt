@@ -44,15 +44,17 @@ copied around to various system directories.
 
 This guide assumes decent foundational knowledge of systems administration on
 Linux hosts, PostgreSQL, and Docker. It has been tested against vanilla PostgreSQL v13+
-installed on the latest long-term-support version of Ubuntu. Please ensure you have a
-working, modern PostgreSQL installation on the latest Ubuntu.
+installed on the latest long-term-support version of Ubuntu. 
+
+**Please ensure you have a working, modern PostgreSQL installation with the PostGIS
+extension installed on the latest Ubuntu.**
 
 ### Docker
 
 The OpenMapTiles toolchain, as mentioned, runs out of docker containers. Let's make
 sure we have it installed:
 ```bash
-sudo apt-get install docker.io docker-compose
+sudo apt install docker.io docker-compose
 
 sudo usermod -aG docker <your username>
 
@@ -63,18 +65,16 @@ If you get an error after running `docker ps`, just log out and log back in. Thi
 is usually due to the permissions to access the docker daemon not having taken
 effect yet.
 
-### Golang
+### Imposm3
+
+Depending on the use case, you can install `imposm3` to manually configure and run
+data updates. **This isn't necessary for the initial data import.**
 
 The server will need Golang to run the `imposm3` OSM import tool. Install it
 with the snap package manager for the easiest time:
 ```bash
 sudo snap install go
 ```
-
-### Imposm3
-
-Depending on the use case, you can install `imposm3` to manually configure and run
-data updates. This isn't necessary for the initial data import.
 
 Clone and install `imposm3` with the following commands:
 ```bash
@@ -100,7 +100,7 @@ git clone https://github.com/pramsey/pgsql-gzip
 Enter the repo directory. We'll need a few prerequisite libraries before we
 can build the extension from source. Run:
 ```bash
-sudo apt-get install build-essential zlib1g-dev postgresql-server-dev-all pkg-config
+sudo apt install build-essential zlib1g-dev postgresql-server-dev-all pkg-config
 ```
 
 Once that's succeeded, we can move forward with building the extension:
@@ -164,7 +164,7 @@ git clone https://github.com/giggls/mapnik-german-l10n
 
 Enter the repo directory and begin by installing the required libraries:
 ```bash
-sudo apt-get install devscripts equivs
+sudo apt install devscripts equivs
 
 sudo mk-build-deps -i debian/control
 ```
@@ -172,6 +172,8 @@ sudo mk-build-deps -i debian/control
 Install python3 and pip3 if not already installed and add the Thai transcription
 library:
 ```bash
+sudo apt install python3 python3-pip
+
 sudo pip3 install tltk
 ```
 
@@ -496,8 +498,13 @@ diagnose any possible issues. I've ocassionally had to manually run some of thes
 when doing a full planet import while testing this guide. No conclusions have yet
 been made as to what the cause is.
 
-Re-running make `import-sql` is not harmful. Correct issues and re-run the script if
-you need to.
+Re-running make `import-sql` is not harmful as it is idempotent. Correct issues and
+re-run the script if you need to.
+
+**NOTE:** Upgrading the openmaptiles repo that we cloned may lead to changes in the compiled SQL
+if you have an existing schema installed. This may cause failures in the `import-sql`
+stage. Keep an eye on the log output and drop any existing functions that may have their
+return types changed.
 
 **If you got this far with no issues, you need to pat yourself on the back. It is done.**
 
